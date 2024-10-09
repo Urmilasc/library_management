@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> Add your CSS file
+</head>
+<body>
+    <h1>Welcome to the Dashboard</h1>
+    <p>Role: {{ user.role }}</p>
+
+    {% if user.role == 'librarian' %}
+        <h2>Manage Books</h2>
+        <ul>
+            <li><a href="{% url 'add_book' %}">Add Book</a></li>
+            <li><a href="{% url 'update_book' %}">Update Book</a></li>
+            <li><a href="{% url 'delete_book' %}">Delete Book</a></li>
+            <li><a href="{% url 'view_members' %}">View Members</a></li>
+            <li><a href="{% url 'view_history' %}">View Borrow History</a></li>
+        </ul>
+    {% elif user.role == 'member' %}
+        <h2>Your Books</h2>
+        <ul>
+            <li><a href="{% url 'view_available_books' %}">View Available Books</a></li>
+            <li><a href="{% url 'borrow_book' %}">Borrow Book</a></li>
+            <li><a href="{% url 'return_book' %}">Return Book</a></li>
+            <li><a href="{% url 'view_borrow_history' %}">View Borrow History</a></li>
+            <li><a href="{% url 'delete_account' %}">Delete My Account</a></li>
+        </ul>
+    {% else %}
+        <p>Unexpected role. Please contact the administrator.</p>
+    {% endif %}
+    
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

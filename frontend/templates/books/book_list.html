@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+    <h1>Available Books</h1>
+    <ul>
+        {% for book in books %}
+            <li>
+                {{ book.title }} by {{ book.author }} - Status: {{ book.status }}
+                {% if book.status == 'available' %}
+                    <a href="{% url 'borrow_book' book.id %}">Borrow</a>
+                {% else %}
+                    <a href="{% url 'return_book' book.id %}">Return</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No books available</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_book' %}">Add New Book</a>
+</body>
+</html>
